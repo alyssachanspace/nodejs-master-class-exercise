@@ -13,7 +13,7 @@ const _data = require('./lib/data')
 
 // Testing
 // @TODO delete this
-_data.create('test','newFile',{'foo': 'bar'},function(err){
+_data.update('test','newFile',{'fizz':'buzz'},function(err){
   console.log('Error', err)
 })
 
