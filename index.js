@@ -1,7 +1,5 @@
 /*
  * Primary file for the API
- *
- * 
  */
 
 // Dependencies
@@ -18,11 +16,14 @@ const server = http.createServer(function(req, res){
   const path = parseURL.pathname
   const trimmedPath = path.replace(/^\/+|\/+$/g, '')
 
+  // Get the HTTP method
+  const method = req.method.toLowerCase()
+
   // Send thhe respond
   res.end('Hello world\n')
 
   // Log the request path
-  console.log('Request received on path: ' + trimmedPath)
+  console.log('Request received on path: ' + trimmedPath + ' with method: ' + method)
 })
 
 // Start thhe server, and have it listen on port 3000
