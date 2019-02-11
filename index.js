@@ -9,6 +9,13 @@ const config = require('./config')
 const fs = require('fs')
 const url = require('url')
 const StringDecoder = require('string_decoder').StringDecoder
+const _data = require('./lib/data')
+
+// Testing
+// @TODO delete this
+_data.create('test','newFile',{'foo': 'bar'},function(err){
+  console.log('Error', err)
+})
 
 // Instantiate the HTTP server
 const httpServer = http.createServer(function(req, res){
