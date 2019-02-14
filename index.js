@@ -13,12 +13,12 @@ const handlers = require('./lib/handlers')
 const helpers = require('./lib/helpers')
 
 // Instantiate the HTTP server
-const httpServer = http.createServer(function(req, res){
+const httpServer = http.createServer((req, res) => {
   unifiedServer(req,res)
 })
 
 // Start the server, and have it listen on port 3000 (staging) or 5000 (production)
-httpServer.listen(config.httpPort, function(){
+httpServer.listen(config.httpPort, () => {
   console.log(`The http server is listening on port ${config.httpPort}`)
 })
 
@@ -27,17 +27,17 @@ const httpsServiceOptions = {
   'key': fs.readFileSync('./https/key.pem'),
   'cert': fs.readFileSync('./https/cert.pem')
 }
-const httpsServer = https.createServer(httpsServiceOptions,function(req, res){
-  unifiedServer(req,res)
+const httpsServer = https.createServer(httpsServiceOptions, (req, res) => {
+  unifiedServer(req, res)
 })
 
 // Start the HTTPS server
-httpsServer.listen(config.httpsPort, function(){
+httpsServer.listen(config.httpsPort, () => {
   console.log(`The https server is listening on port ${config.httpsPort}`)
 })
 
 // All the server logic for bothh the http and https server
-const unifiedServer = function(req,res){
+const unifiedServer = (req, res) => {
 
   // Get the URL and parse it
   const parsedURL = url.parse(req.url, true)
@@ -58,10 +58,10 @@ const unifiedServer = function(req,res){
   // Get the payload, if any
   const decoder = new StringDecoder('utf-8')
   let buffer = ''
-  req.on('data', function(data){
+  req.on('data', (data) => {
     buffer += decoder.write(data)
   })
-  req.on('end', function(){
+  req.on('end', () => {
     buffer += decoder.end()
 
     // Choose thhe handler this request should go to
@@ -78,7 +78,7 @@ const unifiedServer = function(req,res){
     }
 
     // Route the request to the handler specified in the router
-    chosenHandler(data,function(statusCode,payload){
+    chosenHandler(data, (statusCode, payload) => {
 
       // Use the status code called back the handler, or set the default status code to 200
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200
